@@ -1,1 +1,55 @@
-#deploy.yml
+name: JuiceShop-Deploy
+on:
+  workflow_dispatch:
+  
+  pull_request:
+    branches: [main]
+
+jobs:
+  tests:
+    name: tests
+    runs-on: ubuntu-latest
+
+    env:
+      HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Node
+        uses: actions/setup-node@v2
+
+        with:
+          node-version: "14"
+
+      - name: do npm install
+        run: npm install -g snyk heroku
+
+      - name: Building docker image 
+        run: docker build -t mytest/mytest . 
+
+      - name: Scanning image with snyk 
+        run: snyk container test mytest/mytest --file=Dockerfile
+      
+      - name: Heroku configure 
+        run: | 
+          heroku container:login 
+          export TIME=$(date +%s)
+          export APPNAME="juiceshop$TIME"
+          heroku create $APPNAME
+      
+      - name: Push image to Heroku registry 
+        run: heroku container:push mytest 
+      
+      - name: Heroku release image 
+        run: heroku container:release mytest
+
+      - name: Heroku app url 
+        run: |
+          heroku info 
+          echo "https://$APPNAME.herokuapp.com"
+
+
+
+      
