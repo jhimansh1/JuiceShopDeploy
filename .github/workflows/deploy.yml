@@ -37,6 +37,9 @@ jobs:
           export APPNAME="juiceshop$TIME"
           heroku create $APPNAME
       
+      - name: Heroku node js build packs configuration  
+        run: heroku buildpacks:set heroku/nodejs
+
       - name: Push image to Heroku registry 
         run: heroku container:push mytest 
       
