@@ -9,8 +9,9 @@ jobs:
   tests:
     name: tests
     runs-on: ubuntu-latest
+
     env:
-      PAT: ${{ secrets.PAT}}
+      HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
 
     steps:
       - name: Checkout code
@@ -22,21 +23,33 @@ jobs:
         with:
           node-version: "14"
 
-      - name: Replace & .Meta Package for Github Actions.
-        run: |
-
-          rm .meta 
-          mv  cicd/.meta_cicd .
-          mv  .meta_cicd .meta
-
-      - name: adding meta auth to access repos
-        run: sed -i "s/TOKEN_HERE/$PAT/g" .meta
-
       - name: do npm install
-        run: npm install
+        run: npm install -g snyk heroku
 
-      - name: Create npm Package of current Code
-        run: npm pack
+      - name: Building docker image 
+        run: docker build -t mytest/mytest . 
 
-      - name: Check Results
-        run: ./test/test.sh
+      - name: Scanning image with snyk 
+        run: snyk container test mytest/mytest --file=Dockerfile
+      
+      - name: Heroku configure 
+        run: | 
+          heroku container:login 
+          export TIME=$(date +%s)
+          export APPNAME="juiceshop$TIME"
+          heroku create $APPNAME
+      
+      - name: Push image to Heroku registry 
+        run: heroku container:push mytest 
+      
+      - name: Heroku release image 
+        run: heroku container:release mytest
+
+      - name: Heroku app url 
+        run: |
+          heroku info 
+          echo "https://$APPNAME.herokuapp.com"
+
+
+
+      
