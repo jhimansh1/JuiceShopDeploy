@@ -9,6 +9,7 @@ jobs:
 
     env:
       HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+      SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
     steps:
       - name: Checkout code
