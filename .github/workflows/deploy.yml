@@ -46,7 +46,7 @@ jobs:
       - name: Heroku app url 
         run: |
           heroku info 
-          echo "https://$APPNAME.herokuapp.com"
+          #echo "https://$APPNAME.herokuapp.com"
 
 
 
