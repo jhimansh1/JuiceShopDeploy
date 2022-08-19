@@ -38,10 +38,10 @@ jobs:
           heroku create $APPNAME
       
       - name: Push image to Heroku registry 
-        run: heroku container:push mytest 
+        run: heroku container:push web 
       
       - name: Heroku release image 
-        run: heroku container:release mytest
+        run: heroku container:release web
 
       - name: Heroku app url 
         run: |
