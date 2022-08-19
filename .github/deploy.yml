@@ -1,1 +1,42 @@
-#deploy.yml
+name: JuiceShop-Deploy
+on:
+  workflow_dispatch:
+  
+  pull_request:
+    branches: [main]
+
+jobs:
+  tests:
+    name: tests
+    runs-on: ubuntu-latest
+    env:
+      PAT: ${{ secrets.PAT}}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Node
+        uses: actions/setup-node@v2
+
+        with:
+          node-version: "14"
+
+      - name: Replace & .Meta Package for Github Actions.
+        run: |
+
+          rm .meta 
+          mv  cicd/.meta_cicd .
+          mv  .meta_cicd .meta
+
+      - name: adding meta auth to access repos
+        run: sed -i "s/TOKEN_HERE/$PAT/g" .meta
+
+      - name: do npm install
+        run: npm install
+
+      - name: Create npm Package of current Code
+        run: npm pack
+
+      - name: Check Results
+        run: ./test/test.sh
