@@ -44,23 +44,23 @@ jobs:
       - name: Scanning image with snyk 
         run: snyk container test mytest/mytest --file=Dockerfile || true
       
-      # - name: Heroku configure 
-      #   run: | 
-      #     heroku container:login 
-      #     export TIME=$(date +%s)
-      #     export APPNAME="juiceshop$TIME"
-      #     heroku create $APPNAME
+      - name: Heroku configure 
+        run: | 
+          heroku container:login 
+          export TIME=$(date +%s)
+          export APPNAME="juiceshop$TIME"
+          heroku create $APPNAME
       
-      # - name: Push image to Heroku registry 
-      #   run: heroku container:push web 
+      - name: Push image to Heroku registry 
+        run: heroku container:push web 
       
-      # - name: Heroku release image 
-      #   run: heroku container:release web
+      - name: Heroku release image 
+        run: heroku container:release web
 
-      # - name: Heroku app url 
-      #   run: |
-      #     heroku info 
-      #     #echo "https://$APPNAME.herokuapp.com"
+      - name: Heroku app url 
+        run: |
+          heroku info 
+          #echo "https://$APPNAME.herokuapp.com"
 
 
 
