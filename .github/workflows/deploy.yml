@@ -31,7 +31,7 @@ jobs:
       - name: install semgrep 
         run: python3 -m pip install semgrep
 
-      - name: Run Static Anakysis scan 
+      - name: Run Static Analysis scan 
         run: semgrep --config=auto .
         working-directory: juice-shop
       
