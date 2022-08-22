@@ -27,6 +27,13 @@ jobs:
       - name: run npm install 
       - run : npm install 
         working-directory: juice-shop
+
+      - name: install semgrep 
+        run: python3 -m pip install semgrep
+
+      - name: Run Static Anakysis scan 
+        run: semgrep --config=auto .
+        working-directory: juice-shop
       
       - name: do npm install
         run: npm install -g snyk heroku
