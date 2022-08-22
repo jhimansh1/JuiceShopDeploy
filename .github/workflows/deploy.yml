@@ -38,8 +38,8 @@ jobs:
       # - name: do npm install
       #   run: npm install -g snyk heroku
 
-      # - name: Building docker image 
-      #   run: docker build -t mytest/mytest . 
+      - name: Building docker image 
+        run: docker build -t mytest/mytest . 
 
       # - name: Scanning image with snyk 
       #   run: snyk container test mytest/mytest --file=Dockerfile || true
