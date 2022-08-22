@@ -21,6 +21,13 @@ jobs:
         with:
           node-version: "16"
 
+      - name: clone Juice Shop 
+        run: git clone https://github.com/juice-shop/juice-shop.git
+
+      - name: run npm install 
+      - run : npm install 
+        working-directory: juice-shop
+      
       - name: do npm install
         run: npm install -g snyk heroku
 
@@ -30,23 +37,23 @@ jobs:
       - name: Scanning image with snyk 
         run: snyk container test mytest/mytest --file=Dockerfile || true
       
-      - name: Heroku configure 
-        run: | 
-          heroku container:login 
-          export TIME=$(date +%s)
-          export APPNAME="juiceshop$TIME"
-          heroku create $APPNAME
+      # - name: Heroku configure 
+      #   run: | 
+      #     heroku container:login 
+      #     export TIME=$(date +%s)
+      #     export APPNAME="juiceshop$TIME"
+      #     heroku create $APPNAME
       
-      - name: Push image to Heroku registry 
-        run: heroku container:push web 
+      # - name: Push image to Heroku registry 
+      #   run: heroku container:push web 
       
-      - name: Heroku release image 
-        run: heroku container:release web
+      # - name: Heroku release image 
+      #   run: heroku container:release web
 
-      - name: Heroku app url 
-        run: |
-          heroku info 
-          #echo "https://$APPNAME.herokuapp.com"
+      # - name: Heroku app url 
+      #   run: |
+      #     heroku info 
+      #     #echo "https://$APPNAME.herokuapp.com"
 
 
 
