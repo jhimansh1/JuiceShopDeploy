@@ -42,7 +42,7 @@ jobs:
         run: docker build -t mytest/mytest . 
 
       # - name: Scanning image with snyk 
-      #   run: snyk container test mytest/mytest --file=Dockerfile || true
+      #   run: snyk container test mytest/mytest --file=Dockerfile 
       
       - name: Heroku configure 
         run: | 
