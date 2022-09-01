@@ -1,10 +1,10 @@
 #get base image from already published image 
 FROM protectonce/juiceshop:latest
-ENV PO_CLIENTID '34991096-c199-4fca-a632-1c31b6d6300b'
-ENV PO_TOKEN '7321744a-79f6-4b9b-a7fa-bb9add9840ed'
-ENV PO_ENDPOINT 'https://api.dev.protectonce.com'
-ENV PO_APP_NAME 'Container0test1-DependencyTest'
-ENV PROTECTONCE_WORKLOAD_ID 'Container-deployment1'
+ENV PO_CLIENTID '6a7dd893-8279-4afd-94d4-123f19d3b5a0'
+ENV PO_TOKEN 'd7cfd654-cae4-495f-beb7-af0528670c14'
+ENV PO_ENDPOINT 'https://api.app.protectonce.com'
+ENV PO_APP_NAME 'Container0test-newRelease1'
+ENV PROTECTONCE_WORKLOAD_ID 'Container-latestdeployment1'
 WORKDIR /juice-shop
 EXPOSE 3000
 
